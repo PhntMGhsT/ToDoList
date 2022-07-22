@@ -1,8 +1,51 @@
-﻿@{
+﻿@model List<ToDoListWebApplication.Models.Tasks>
+@{
     ViewData["Title"] = "Home Page";
+
+    <style>
+         body {
+             background-color: #F3F2F1 !important
+         }
+    </style>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@if(Model.Count > 0)
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+@foreach(var item in Model) {
+   <div class="col">
+            @{
+                var colorCode = string.Empty;
+                if(item.DueDate < DateTime.Now)
+                {
+                    colorCode = "bg-danger";
+                }
+                else if(item.DueDate < DateTime.Now.AddHours(24))
+                {
+                    colorCode = "bg-warning";
+                }
+                else 
+                {
+                    colorCode = "bg-primary";
+                }
+
+
+       }
+      <div class="card text-white @colorCode">
+         <div class="card-header">
+           Due By: @item.DueDate.ToString("dd/MM/yyyy") 
+         </div>
+         <div class="card-body">
+             <h5 class="card-title">@item.Title</h5>
+             <p class="card-text">@item.Description</p>
+         </div>
+      </div>
+  </div>
+}
 </div>
+}
+else
+{
+    <div class="w-100 mt-2 d-flex justify-content-center">No Task available!</div>
+}

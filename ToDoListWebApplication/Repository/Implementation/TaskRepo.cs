@@ -1,4 +1,5 @@
-﻿using ToDoListWebApplication.Models;
+﻿using ToDoListWebApplication.Data;
+using ToDoListWebApplication.Models;
 using ToDoListWebApplication.Repository.Interface;
 
 namespace ToDoListWebApplication.Repository.Implementation
@@ -13,6 +14,12 @@ namespace ToDoListWebApplication.Repository.Implementation
 
         public async Task AddTask(Tasks model)
         {
+            Tasks _task = model;
+            _task.StatusId = 1;
+            _task.CreatedBy = "Olumide/Joshua";
+            _task.ModifiedBy = "Olumide/Joshua";
+            _task.CreatedDate = DateTime.Now;
+            _task.ModifiedDate = DateTime.Now;
             _context.Add(model);
             await _context.SaveChangesAsync();
         }
@@ -36,7 +43,7 @@ namespace ToDoListWebApplication.Repository.Implementation
 
         public List<Tasks> GetAllTasks()
         {
-            return _context.Tasks.ToList();
+            return _context.Tasks.Where(o => o.StatusId != 3 || o.StatusId != 4).OrderBy(o => o.DueDate).ToList();
         }
 
         public async Task<Tasks> GetTaskById(int id)

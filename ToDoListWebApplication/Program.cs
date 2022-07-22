@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoListWebApplication.Data;
-using ToDoListWebApplication.Models;
-using ToDoListWebApplication.Repository.Implementation; 
+using ToDoListWebApplication.Repository.Implementation;
 using ToDoListWebApplication.Repository.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +33,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Task}/{action=Index}/{id?}");
 
 app.Run();
